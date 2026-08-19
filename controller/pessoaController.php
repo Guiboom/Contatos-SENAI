@@ -27,6 +27,20 @@ class PessoaController {
     }
 
     public function Cadastrar(){
-        
+        $dados = json_encode(file_exists("php://input"), true);
+
+        if(empty($dados['nome']) || empty($dados['email'] || empty($dados['idade']))) {
+            http_response_code(400);
+            echo json_encode(["mensagem"=>"Dados incompleto"]);
+            return;
+        }
+
+        if($this->pessoaModel->cadastrar($dados)) {
+            http_response_code(201);
+            echo json_encode(["mensagem" => "Pessoa Cadastrada"]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["mensagem" => "Erro ao Cadastrar"]);
+        }
     }
 }
