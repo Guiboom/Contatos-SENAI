@@ -19,6 +19,13 @@ class PessoaController {
             case 'POST':
                 $this->cadastrar();
                 break;
+            case 'DELETE':
+                if(isset($_GET['id'])) {
+                    $this->deletarPessoa($_GET['id']);
+                } else {
+                    http_response_code(400);
+                    echo json_encode(["mensagem" => "ID não fornecido"]);
+                }
             default:
                 http_response_code(405);
                 echo json_encode(['mensagem'=>'Método não permitido']);
@@ -53,6 +60,6 @@ class PessoaController {
     }
 
     public function deleterPessoa($id) {
-        echo json_encode()
+        echo json_encode($this->pessoaModel->deleterPessoa($id));
     }
 }

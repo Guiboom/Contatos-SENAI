@@ -14,7 +14,7 @@ class Pessoa {
     }
 
     public function listarPessoa($id) {
-        $result = $this->conexao->query("SELECT * FROM pessoas WHERE id=$id");
+        $result = $this->conexao->query("SELECT * FROM pessoas WHERE pessoa_id=$id");
         return $result->fetch();
     }
 
@@ -23,7 +23,8 @@ class Pessoa {
         return $result;
     }
 
-    function deleterPessoa($id) {
-        $result = $this->conexao->query("DELETE FROM ")
+    public function deletarPessoa($id) {
+        $result = $this->conexao->query("DELETE FROM pessoas WHERE pessoa_id=$id");
+        return $result; 
     }
 }
