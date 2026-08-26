@@ -19,13 +19,22 @@ class PessoaController {
             case 'POST':
                 $this->cadastrar();
                 break;
+            case 'PUT':
+                if(isset($_GET['id'])) {
+                    $this->atualizar($_GET['id']);
+                } else {
+                    http_response_code(400);
+                    echo json_encode(["mensagem" => "ID não fornecido"]);
+                }
+                break;
             case 'DELETE':
                 if(isset($_GET['id'])) {
                     $this->deletarPessoa($_GET['id']);
                 } else {
                     http_response_code(400);
                     echo json_encode(["mensagem" => "ID não fornecido"]);
-                }
+                };
+                break;
             default:
                 http_response_code(405);
                 echo json_encode(['mensagem'=>'Método não permitido']);
@@ -59,7 +68,31 @@ class PessoaController {
          echo json_encode($this->pessoaModel->listarPessoa($id));
     }
 
-    public function deleterPessoa($id) {
-        echo json_encode($this->pessoaModel->deleterPessoa($id));
+    public function deletarPessoa($id) {
+        if($this->pessoaModel->deletarPessoa($id)) {
+            http_response_code(200);
+            echo json_encode(["mensagem" => "Pessoa deletada com sucesso"]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["mensagem" => "Erro ao deletar pessoa"]);
+        }
     }
+
+    public function atualizar($id) {
+    $dados = json_decode(file_get_contents('php://input'), true);
+
+    if(empty($dados['nome']) || empty($dados['email']) || empty($dados['idade'])) {
+        http_response_code(400);
+        echo json_encode(["mensagem" => "Dados incompletos"]);
+        return;
+    }
+
+    if($this->pessoaModel->atualizar($id, $dados)) {
+        http_response_code(200);
+        echo json_encode(["mensagem" => "Pessoa atualizada com sucesso"]);
+    } else {
+        http_response_code(500);
+        echo json_encode(["mensagem" => "Erro ao atualizar pessoa"]);
+    }
+}
 }

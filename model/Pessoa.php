@@ -23,6 +23,11 @@ class Pessoa {
         return $result;
     }
 
+    public function atualizar($id, $dados) {
+    $result = $this->conexao->query("UPDATE pessoas SET nome='{$dados['nome']}', email='{$dados['email']}', idade={$dados['idade']} WHERE pessoa_id=$id");
+    return $result;
+    }
+
     public function deletarPessoa($id) {
         $result = $this->conexao->query("DELETE FROM pessoas WHERE pessoa_id=$id");
         return $result; 
