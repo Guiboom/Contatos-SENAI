@@ -10,7 +10,11 @@ class PessoaController {
     public function processarRequisicao($metodo) {
         switch ($metodo) {
             case 'GET':
-                $this->listarTodos();
+                if(isset($_GET['id'])) {
+                    $this->listarPessoa($_GET['id']);
+                } else {
+                    $this->listarTodos();
+                }
                 break;
             case 'POST':
                 $this->cadastrar();
@@ -42,5 +46,13 @@ class PessoaController {
             http_response_code(500);
             echo json_encode(["mensagem" => "Erro ao Cadastrar"]);
         }
+    }
+
+    public function listarPessoa($id) {
+         echo json_encode($this->pessoaModel->listarPessoa($id));
+    }
+
+    public function deleterPessoa($id) {
+        echo json_encode()
     }
 }

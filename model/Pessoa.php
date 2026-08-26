@@ -13,8 +13,17 @@ class Pessoa {
         
     }
 
+    public function listarPessoa($id) {
+        $result = $this->conexao->query("SELECT * FROM pessoas WHERE id=$id");
+        return $result->fetch();
+    }
+
     public function cadastrar($dados) {
         $result = $this->conexao->query("INSERT INTO pessoas(nome, email, idade) VALUES ('{$dados['nome']}', '{$dados['email']}', '{$dados['idade']}')");
         return $result;
+    }
+
+    function deleterPessoa($id) {
+        $result = $this->conexao->query("DELETE FROM ")
     }
 }
