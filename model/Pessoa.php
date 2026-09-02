@@ -14,14 +14,15 @@ class Pessoa {
     }
 
     public function listarPessoa($id) {
-        $sqlPessoa = $this->conexao->query("SELECT * FROM pessoas WHERE pessoa_id = $id");
+        $sqlPessoa = $this->conexao->query("SELECT * FROM pessoas WHERE pessoa_id=$id");
         $pessoa = $sqlPessoa->fetch();
 
-        $sqlContatos = $this->conexao->query("SELECT * FROM contato WHERE pessoa_id = $id");
-        $contatos = $sqlContatos->fetchAll();
+        $contato = $this->conexao->query("SELECT * FROM contato WHERE pessoa_id=$id");
 
-        $pessoa['contatos'] = $contatos;
-        return $pessoa;
+        $pessoa['contatos'] = $contato->fetchall();
+        $result = $pessoa;
+
+        return $result;
     }
 
     public function cadastrar($dados) {
