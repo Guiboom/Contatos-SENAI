@@ -10,7 +10,7 @@ CREATE TABLE Pessoas (
 CREATE TABLE Contato (
     contato_id INT AUTO_INCREMENT PRIMARY KEY,
     pessoa_id INT NOT NULL,
-    tipo VARCHAR(50) NOT NULL, -- Ex: 'Telefone', 'WhatsApp', 'Celular'
+    tipo VARCHAR(50) NOT NULL,
     numero VARCHAR(20) NOT NULL,
     
     -- Definindo a chave estrangeira vinculada à tabela Pessoas
